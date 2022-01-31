@@ -15,10 +15,10 @@ A bot to automatically book and check is **ESSENTIAL**.
 
 ## Roadmap
 
-- [ ] Connect to university's CAS (= Central Authentication Service) using env variable
-- [ ] Fetch all slots for some sports
+- [x] Connect to university's CAS (= Central Authentication Service) using env variable
+- [x] Fetch all slots for some sports
+- [x] Check availability for these slots
 - [ ] Specify interesting slots
-- [ ] Check availability for these slots
 - [ ] Book slots
 - [ ] Use CRON to regularly check availbility and try to book
 - [ ] Export booked slots to ICS
