@@ -4,6 +4,9 @@
   "description": "",
   "main": "index.js",
   "scripts": {
+    "start": "ts-node src/index.ts",
+    "dev": "nodemon src/index.ts",
+    "build": "tsc",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "author": "Malo Grall",
@@ -16,6 +19,12 @@
     "eslint-plugin-import": "^2.25.4",
     "eslint-plugin-node": "^11.1.0",
     "eslint-plugin-promise": "^5.2.0",
+    "nodemon": "^2.0.15",
     "typescript": "^4.5.5"
+  },
+  "dependencies": {
+    "dotenv": "^15.0.0",
+    "puppeteer": "^13.1.3",
+    "ts-node": "^10.4.0"
   }
 }
