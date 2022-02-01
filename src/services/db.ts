@@ -1,8 +1,8 @@
 import { join } from 'path'
 import { Low, JSONFile } from 'lowdb'
-import { DBStructure } from '../types'
+import { DBStructure } from '../../types'
 
-export class FileDB {
+export class FileDBController {
   private db: Low<DBStructure> | undefined
 
   constructor () {

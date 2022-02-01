@@ -1,4 +1,4 @@
-import { UnSport } from './UnSport'
+import { UnSport } from './services/UNSport'
 
 require('dotenv').config()
 
