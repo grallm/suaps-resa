@@ -1,7 +1,5 @@
 import { UnSport } from './services/UNSport'
 
-require('dotenv').config()
-
 const main = async () => {
   const unSport = new UnSport()
   await unSport.init()

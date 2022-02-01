@@ -2,8 +2,8 @@ import { join } from 'path'
 import { Low, JSONFile } from 'lowdb'
 import { DBStructure } from '../../types'
 
-export class FileDBController {
-  private db: Low<DBStructure> | undefined
+export class FileDB {
+  private db: Low<DBStructure>
 
   constructor () {
     // Use JSON file for storage
@@ -20,8 +20,6 @@ export class FileDBController {
    * Set DB to default value or from file value
    */
   public async init () {
-    if (!this.db) throw new Error('No DB initialized')
-
     // Read data from JSON file, this will set db.data content
     await this.db.read()
 
@@ -37,6 +35,6 @@ export class FileDBController {
    * Save DB to file
    */
   public async save () {
-    await this.db?.write()
+    await this.db.write()
   }
 }
