@@ -1,5 +1,6 @@
 import { Reservation } from '../../types'
 import { FileDB } from '../services/db'
+import { v4 as uuid } from 'uuid'
 
 export class ReservationController {
   private fileDB
@@ -14,5 +15,19 @@ export class ReservationController {
     return this.db
       .get('reservations')
       .value()
+  }
+
+  /**
+   * Add a Reservation
+   * @param reservation
+   */
+  public add (reservation: Omit<Reservation, 'id'>) {
+    this.db
+      .get('reservations')
+      .push({
+        ...reservation,
+        id: uuid()
+      })
+      .write()
   }
 }

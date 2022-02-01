@@ -74,10 +74,13 @@ export interface UserSports {
 }
 
 export interface Reservation {
-  id: number
+  id: string
   sportId: number
   slotId: number
   date: Date
+  /**
+   * Should the reservation be done each week or disappear after done ?
+   */
   recurrent: boolean
 }
 
