@@ -1,5 +1,5 @@
 import puppeteer from 'puppeteer'
-import { UserSports } from './types'
+import { UserSports } from '../types'
 
 const initUrl = 'https://cas-ha.univ-nantes.fr/esup-cas-server/login?service=https://unsport.univ-nantes.fr/web/authenticate'
 
@@ -34,16 +34,26 @@ export class UnSport {
   /**
    * Fetch all user's sports and slots
    */
-  public async fetchSports () {
+  public async fetchSports (): Promise<UserSports | null> {
     if (!this.page) throw new Error('Page not initialized')
 
-    await this.page.goto('https://unsport.univ-nantes.fr/web/api/user')
+    try {
+      await this.page.goto('https://unsport.univ-nantes.fr/web/api/user')
 
-    const userSportsFetch = await this.page.evaluate(() => document.body.textContent)
+      const userSportsFetch = await this.page.evaluate(() => document.body.textContent)
 
-    if (!userSportsFetch) throw new Error('Error when fetching sports')
+      if (!userSportsFetch) throw new Error('Error when fetching sports')
 
-    const userSports = JSON.parse(userSportsFetch) as UserSports
-    console.log(userSportsFetch)
+      const userSports = JSON.parse(userSportsFetch) as UserSports
+
+      return userSports
+    } catch (error) {
+      console.error(error)
+      return null
+    }
+  }
+
+  public async closeBrowser () {
+    await this.browser?.close()
   }
 }

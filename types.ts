@@ -72,3 +72,16 @@ export interface UserSports {
   paiementEffectue: boolean;
   sports: Sport[];
 }
+
+export interface Reservation {
+  id: number
+  sportId: number
+  slotId: number
+  date: Date
+  recurrent: boolean
+}
+
+export interface DBStructure {
+  reservations: Reservation[]
+  lastFetch: UserSports | null
+}
