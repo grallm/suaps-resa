@@ -1,5 +1,6 @@
 import express from 'express'
 import morgan from 'morgan'
+import { rootRouter } from './controllers/root.controller'
 import { reservationRouter } from './routes/reservations.route'
 
 require('dotenv').config()
@@ -22,6 +23,7 @@ if (process.env.NODE_ENV === 'development') {
 
 // Define all routes
 app.use('/reservations', reservationRouter)
+app.use('/', rootRouter)
 
 app.listen(PORT, () => {
   // eslint-disable-next-line no-console

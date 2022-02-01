@@ -20,9 +20,11 @@ reservationRouter.get('/', (req, res) => {
 reservationRouter.post(
   '/',
   body(['sportId', 'slotId']).isNumeric(),
+  body('recurrent').optional().isBoolean(),
   (req: express.Request<{}, {}, {
     sportId: number
     slotId: number
+    recurrent?: boolean
   }>, res) => {
     const errors = validationResult(req)
     if (!errors.isEmpty()) {
@@ -33,7 +35,7 @@ reservationRouter.post(
       slotId: req.body.slotId,
       sportId: req.body.sportId,
       date: new Date(),
-      recurrent: false
+      recurrent: req.body.recurrent || false
     })
 
     return res.send()
