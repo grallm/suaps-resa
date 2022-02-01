@@ -48,7 +48,7 @@ export interface Categorie {
   couleur: string;
 }
 
-export interface Sport {
+export interface SportList {
   code: number;
   categorie: Categorie;
   registrations: Registration[];
@@ -70,7 +70,7 @@ export interface UserSports {
   typePersonne: string;
   montantPaiement: number;
   paiementEffectue: boolean;
-  sports: Sport[];
+  sports: SportList[];
 }
 
 export interface Reservation {
@@ -86,5 +86,6 @@ export interface Reservation {
 
 export interface DBStructure {
   reservations: Reservation[]
-  lastFetch: UserSports | null
+  sportsSlots: SportList[]
+  lastFetch: Date
 }

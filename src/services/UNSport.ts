@@ -15,9 +15,7 @@ export class UnSport {
       throw new Error('Missing Auth')
     }
 
-    this.browser = await puppeteer.launch({
-      headless: false
-    })
+    this.browser = await puppeteer.launch()
 
     this.page = await this.browser.newPage()
     await this.page.goto(initUrl)
