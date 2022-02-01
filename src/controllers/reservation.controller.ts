@@ -1,9 +1,18 @@
+import { Reservation } from '../../types'
 import { FileDB } from '../services/db'
 
 export class ReservationController {
-  private db: FileDB
+  private fileDB
+  private db
 
   constructor (db: FileDB) {
-    this.db = db
+    this.fileDB = db
+    this.db = db.DB
+  }
+
+  get getAll (): Reservation[] {
+    return this.db
+      .get('reservations')
+      .value()
   }
 }

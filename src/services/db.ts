@@ -1,40 +1,26 @@
 import { join } from 'path'
-import { Low, JSONFile } from 'lowdb'
+import LowDB from 'lowdb'
+import FileSync from 'lowdb/adapters/FileSync'
 import { DBStructure } from '../../types'
 
 export class FileDB {
-  private db: Low<DBStructure>
+  private db
 
   constructor () {
-    // Use JSON file for storage
-    const file = join(__dirname, 'db.json')
-    const adapter = new JSONFile<DBStructure>(file)
-    this.db = new Low<DBStructure>(adapter)
+    // Use JSON file for storage and set default if absent
+    const file = join(__dirname, '../../db.json')
+    const adapter = new FileSync<DBStructure>(file, {
+      defaultValue: {
+        reservations: [],
+        lastFetch: null
+      }
+    })
+
+    this.db = LowDB(adapter)
   }
 
   get DB () {
     return this.db
   }
-
-  /**
-   * Set DB to default value or from file value
-   */
-  public async init () {
-    // Read data from JSON file, this will set db.data content
-    await this.db.read()
-
-    // If file.json doesn't exist, db.data will be null
-    // Set default data
-    this.db.data = this.db.data || {
-      reservations: [],
-      lastFetch: null
-    }
-  }
-
-  /**
-   * Save DB to file
-   */
-  public async save () {
-    await this.db.write()
-  }
 }
+export const db = new FileDB()

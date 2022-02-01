@@ -1,7 +1,6 @@
 module.exports = {
   env: {
-    browser: true,
-    es2021: true
+    node: true
   },
   extends: [
     'standard'
@@ -15,5 +14,7 @@ module.exports = {
     '@typescript-eslint'
   ],
   rules: {
-  }
+    'no-console': 1
+  },
+  root: true
 }
