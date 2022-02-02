@@ -1,7 +1,8 @@
 import express from 'express'
 import morgan from 'morgan'
-import { rootRouter } from './controllers/root.controller'
+import { rootRouter } from './routes/root.route'
 import { reservationRouter } from './routes/reservations.route'
+import { sportSlotRouter } from './routes/sportSlots.route'
 
 require('dotenv').config()
 
@@ -23,6 +24,7 @@ if (process.env.NODE_ENV === 'development') {
 
 // Define all routes
 app.use('/reservations', reservationRouter)
+app.use('/slots', sportSlotRouter)
 app.use('/', rootRouter)
 
 app.listen(PORT, () => {

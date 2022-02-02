@@ -35,6 +35,8 @@ export class UnSport {
   public async fetchSports (): Promise<UserSports | null> {
     if (!this.page) throw new Error('Page not initialized')
 
+    if (process.env.NODE_ENV === 'development') console.log('Fetching UNSport...')
+
     try {
       await this.page.goto('https://unsport.univ-nantes.fr/web/api/user')
 
@@ -43,6 +45,8 @@ export class UnSport {
       if (!userSportsFetch) throw new Error('Error when fetching sports')
 
       const userSports = JSON.parse(userSportsFetch) as UserSports
+
+      if (process.env.NODE_ENV === 'development') console.log('Successfuly fetched UNSport !')
 
       return userSports
     } catch (error) {

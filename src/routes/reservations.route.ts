@@ -1,11 +1,13 @@
 import express from 'express'
-import { DBStructure, LocalDB } from '../services/Database'
+import { LocalDB } from '../services/Database'
 import { ReservationController } from '../controllers/reservation.controller'
 import { body, validationResult } from 'express-validator'
+import { SportSlotController } from '../controllers/sportSlot.controller'
 
 export const reservationRouter = express.Router()
 
 const reservationController = new ReservationController(LocalDB)
+const sportSlotController = new SportSlotController(LocalDB)
 
 /**
  * Get all reservations
@@ -26,14 +28,8 @@ reservationRouter.post(
   body('recurrent').optional().isBoolean(),
   body().custom((body) => {
     // Check if slot exists
-    if (body.sportId && body.slotId) {
-      LocalDB.DB
-        .get('sportsSlots')
-        .find({
-          code: body.slotId,
-          sportId: body.sportId
-        } as Partial<DBStructure['sportsSlots'][number]>)
-        .value()
+    if (body.sportId && body.slotId && !sportSlotController.getSportSlot(body.slotId, body.sportId)) {
+      throw new Error('Slot not found')
     }
   }),
   (req: express.Request<{}, {}, {

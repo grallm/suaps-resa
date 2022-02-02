@@ -2,18 +2,10 @@ import { join } from 'path'
 import LowDB from 'lowdb'
 import FileSync from 'lowdb/adapters/FileSync'
 import { UnSport } from './UNSport'
-import { Reservation } from '../models/reservation.model'
-import { Creneau, SportList } from '../models/sportsSlotsFetch.model'
 import { sportFetchToSportDb, sportsSlotFetchToSlotDb } from '../utils/convertFetchToDb'
+import { DBStructure } from './database.types'
 
 require('dotenv').config()
-
-export interface DBStructure {
-  reservations: Reservation[]
-  lastFetch: Date
-  sports: Omit<SportList, 'registrations' | 'creneaux'>[]
-  sportsSlots: (Creneau & { sportId: number })[]
-}
 
 export class FileDB {
   private db

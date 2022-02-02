@@ -1,5 +1,5 @@
 import { SportList } from '../models/sportsSlotsFetch.model'
-import { DBStructure } from '../services/Database'
+import { DBStructure } from '../services/database.types'
 
 /**
  * Convert sport fetched to DB Sport type

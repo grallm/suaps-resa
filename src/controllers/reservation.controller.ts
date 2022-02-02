@@ -1,4 +1,4 @@
-import { DBStructure, FileDB } from '../services/Database'
+import { FileDB } from '../services/Database'
 import { v4 as uuid } from 'uuid'
 import { Reservation } from '../models/reservation.model'
 
@@ -8,12 +8,11 @@ export class ReservationController {
 
   constructor (db: FileDB) {
     this.fileDB = db
-    this.db = db.DB
+    this.db = db.DB.get('reservations')
   }
 
   get getAll (): Reservation[] {
     return this.db
-      .get('reservations')
       .value()
   }
 
@@ -21,9 +20,8 @@ export class ReservationController {
    * Add a Reservation
    * @param reservation
    */
-  public add (reservation: Omit<DBStructure['reservations'][number], 'id'>) {
+  public add (reservation: Omit<Reservation, 'id'>) {
     this.db
-      .get('reservations')
       .push({
         ...reservation,
         id: uuid()
