@@ -1,6 +1,6 @@
-import { Reservation } from '../../types'
-import { FileDB } from '../services/db'
+import { DBStructure, FileDB } from '../services/Database'
 import { v4 as uuid } from 'uuid'
+import { Reservation } from '../models/reservation.model'
 
 export class ReservationController {
   private fileDB
@@ -21,7 +21,7 @@ export class ReservationController {
    * Add a Reservation
    * @param reservation
    */
-  public add (reservation: Omit<Reservation, 'id'>) {
+  public add (reservation: Omit<DBStructure['reservations'][number], 'id'>) {
     this.db
       .get('reservations')
       .push({

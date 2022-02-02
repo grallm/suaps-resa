@@ -1,5 +1,5 @@
 import puppeteer from 'puppeteer'
-import { UserSports } from '../../types'
+import { UserSports } from '../models/sportsSlotsFetch.model'
 
 const initUrl = 'https://cas-ha.univ-nantes.fr/esup-cas-server/login?service=https://unsport.univ-nantes.fr/web/authenticate'
 

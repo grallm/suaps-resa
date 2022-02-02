@@ -1,10 +1,19 @@
 import { join } from 'path'
 import LowDB from 'lowdb'
 import FileSync from 'lowdb/adapters/FileSync'
-import { DBStructure } from '../../types'
 import { UnSport } from './UNSport'
+import { Reservation } from '../models/reservation.model'
+import { Creneau, SportList } from '../models/sportsSlotsFetch.model'
+import { sportFetchToSportDb, sportsSlotFetchToSlotDb } from '../utils/convertFetchToDb'
 
 require('dotenv').config()
+
+export interface DBStructure {
+  reservations: Reservation[]
+  lastFetch: Date
+  sports: Omit<SportList, 'registrations' | 'creneaux'>[]
+  sportsSlots: (Creneau & { sportId: number })[]
+}
 
 export class FileDB {
   private db
@@ -16,7 +25,8 @@ export class FileDB {
       defaultValue: {
         reservations: [],
         lastFetch: new Date(),
-        sportsSlots: []
+        sportsSlots: [],
+        sports: []
       }
     })
 
@@ -27,7 +37,16 @@ export class FileDB {
     unSport.init().then(() =>
       unSport.fetchSports().then(sports => {
         if (sports) {
-          this.db.set('sportsSlots', sports.sports).value()
+          // Transform sports
+          this.db.set('sports', sports.sports
+            .map(sport => sportFetchToSportDb(sport)) as DBStructure['sports'])
+            .value()
+
+          // Transform sport slots
+          this.db.set('sportsSlots', sports.sports
+            .reduce((accu, sport) => [...accu, ...sportsSlotFetchToSlotDb(sport)], [] as DBStructure['sportsSlots']))
+            .value()
+
           this.db.set('lastFetch', new Date()).value()
 
           this.db.write()
@@ -41,6 +60,6 @@ export class FileDB {
   }
 }
 
-export const db = new FileDB()
+export const LocalDB = new FileDB()
 // eslint-disable-next-line no-console
 console.log('Database started')

@@ -1,5 +1,5 @@
 import express from 'express'
-import { db } from '../services/db'
+import { LocalDB } from '../services/Database'
 import { UnSport } from '../services/UNSport'
 
 export const rootRouter = express.Router()
@@ -16,10 +16,10 @@ rootRouter.get('/forceFetch', async (req, res) => {
 
     if (!sports) throw new Error('No response')
 
-    db.DB.set('lastFetch', new Date()).value()
-    db.DB.set('sportsSlots', sports.sports).value()
+    LocalDB.DB.set('lastFetch', new Date()).value()
+    LocalDB.DB.set('sportsSlots', sports.sports).value()
 
-    await db.DB.write()
+    await LocalDB.DB.write()
 
     return res.send(sports.sports)
   } catch (err) {

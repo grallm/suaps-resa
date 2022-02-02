@@ -72,20 +72,3 @@ export interface UserSports {
   paiementEffectue: boolean;
   sports: SportList[];
 }
-
-export interface Reservation {
-  id: string
-  sportId: number
-  slotId: number
-  date: Date
-  /**
-   * Should the reservation be done each week or disappear after done ?
-   */
-  recurrent: boolean
-}
-
-export interface DBStructure {
-  reservations: Reservation[]
-  sportsSlots: SportList[]
-  lastFetch: Date
-}
