@@ -1,8 +1,6 @@
 import { join } from 'path'
 import LowDB from 'lowdb'
 import FileSync from 'lowdb/adapters/FileSync'
-import { UnSport } from './UNSport'
-import { sportFetchToSportDb, sportsSlotFetchToSlotDb } from '../utils/convertFetchToDb'
 import { DBStructure } from './database.types'
 
 require('dotenv').config()
@@ -25,26 +23,29 @@ export class FileDB {
     this.db = LowDB(adapter)
 
     // Do a default fetch for slots
-    const unSport = new UnSport()
-    unSport.init().then(() =>
-      unSport.fetchSports().then(sports => {
-        if (sports) {
-          // Transform sports
-          this.db.set('sports', sports.sports
-            .map(sport => sportFetchToSportDb(sport)) as DBStructure['sports'])
-            .value()
+    /**
+     * REMOVE COMMENT
+     */
+    // const unSport = new UnSport()
+    // unSport.init().then(() =>
+    //   unSport.fetchSports().then(sports => {
+    //     if (sports) {
+    //       // Transform sports
+    //       this.db.set('sports', sports.sports
+    //         .map(sport => sportFetchToSportDb(sport)) as DBStructure['sports'])
+    //         .value()
 
-          // Transform sport slots
-          this.db.set('sportsSlots', sports.sports
-            .reduce((accu, sport) => [...accu, ...sportsSlotFetchToSlotDb(sport)], [] as DBStructure['sportsSlots']))
-            .value()
+    //       // Transform sport slots
+    //       this.db.set('sportsSlots', sports.sports
+    //         .reduce((accu, sport) => [...accu, ...sportsSlotFetchToSlotDb(sport)], [] as DBStructure['sportsSlots']))
+    //         .value()
 
-          this.db.set('lastFetch', new Date()).value()
+    //       this.db.set('lastFetch', new Date()).value()
 
-          this.db.write()
-        }
-      })
-    )
+    //       this.db.write()
+    //     }
+    //   })
+    // )
   }
 
   get DB () {

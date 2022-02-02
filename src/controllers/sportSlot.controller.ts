@@ -3,11 +3,9 @@ import { DBSportSlot, DBStructure } from '../services/database.types'
 
 export class SportSlotController {
   private db
-  private db1
 
   constructor (db: FileDB) {
     this.db = db.DB.get('sportsSlots')
-    this.db1 = db.DB
   }
 
   get getAll (): DBSportSlot[] {
@@ -22,8 +20,7 @@ export class SportSlotController {
    * @returns
    */
   public getSportSlot (sportId: number, slotId: number): DBSportSlot | null {
-    console.log(sportId, slotId)
-    return this.db1.get('sportsSlots')
+    return this.db
       .find({
         code: slotId,
         sportId: sportId

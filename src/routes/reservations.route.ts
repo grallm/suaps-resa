@@ -28,9 +28,13 @@ reservationRouter.post(
   body('recurrent').optional().isBoolean(),
   body().custom((body) => {
     // Check if slot exists
-    if (body.sportId && body.slotId && !sportSlotController.getSportSlot(body.slotId, body.sportId)) {
+    if (
+      body.sportId && body.slotId &&
+      !sportSlotController.getSportSlot(parseInt(body.sportId), parseInt(body.slotId))
+    ) {
       throw new Error('Slot not found')
     }
+    return true
   }),
   (req: express.Request<{}, {}, {
     sportId: number

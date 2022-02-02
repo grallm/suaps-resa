@@ -26,6 +26,11 @@ sportSlotRouter.get(
       return res.status(400).json({ errors: errors.array() })
     }
 
-    return res.send(LocalDB.DB.get('sportsSlots').find({ code: req.params!.id }).value() || null)
+    const found = LocalDB.DB.get('sportsSlots')
+      .find({
+        code: parseInt(req.params!.id)
+      }).value()
+
+    return found ? res.send(found) : res.sendStatus(404)
   }
 )
