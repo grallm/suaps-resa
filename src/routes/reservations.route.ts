@@ -37,8 +37,8 @@ reservationRouter.post(
     return true
   }),
   (req: express.Request<{}, {}, {
-    sportId: number
-    slotId: number
+    sportId: string
+    slotId: string
     recurrent?: boolean
   }>, res) => {
     const errors = validationResult(req)
@@ -46,14 +46,23 @@ reservationRouter.post(
       return res.status(400).json({ errors: errors.array() })
     }
 
-    reservationController.add({
-      slotId: req.body.slotId,
-      sportId: req.body.sportId,
-      date: new Date(),
-      recurrent: req.body.recurrent || false,
-      startCheck: new Date()
-    })
+    const slot = sportSlotController.getSportSlot(
+      parseInt(req.body.sportId),
+      parseInt(req.body.slotId)
+    )
 
-    return res.send()
+    if (!slot) return res.sendStatus(404)
+
+    return res.send(
+      reservationController.add({
+        slotId: parseInt(req.body.slotId),
+        sportId: parseInt(req.body.sportId),
+        dateStart: slot.start,
+        dateEnd: slot.end,
+        recurrent: req.body.recurrent || false,
+        startCheck: new Date(),
+        booked: false
+      })
+    )
   }
 )

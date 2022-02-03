@@ -35,6 +35,7 @@ export class UnSport {
   public async fetchSports (): Promise<UserSports | null> {
     if (!this.page) throw new Error('Page not initialized')
 
+    // eslint-disable-next-line no-console
     if (process.env.NODE_ENV === 'development') console.log('Fetching UNSport...')
 
     try {
@@ -46,6 +47,7 @@ export class UnSport {
 
       const userSports = JSON.parse(userSportsFetch) as UserSports
 
+      // eslint-disable-next-line no-console
       if (process.env.NODE_ENV === 'development') console.log('Successfuly fetched UNSport !')
 
       return userSports

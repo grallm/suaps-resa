@@ -21,11 +21,15 @@ export class ReservationController {
    * @param reservation
    */
   public add (reservation: Omit<Reservation, 'id'>) {
+    const id = uuid()
+
     this.db
       .push({
         ...reservation,
-        id: uuid()
+        id
       })
       .write()
+
+    return this.db.find({ id }).value()
   }
 }

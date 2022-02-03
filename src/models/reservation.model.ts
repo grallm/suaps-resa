@@ -3,9 +3,10 @@ export interface Reservation {
   sportId: number
   slotId: number
   /**
-   * When is the slot
+   * When is the slot, useful for exporting Calendar
    */
-  date: Date
+  dateStart: Date
+  dateEnd: Date
   /**
    * When to start checking
    * - startCheck < now = not booked, continue fetching
@@ -16,4 +17,5 @@ export interface Reservation {
    * Should the reservation be done each week or disappear after done ?
    */
   recurrent: boolean
+  booked: boolean
 }

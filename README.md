@@ -10,8 +10,9 @@ A bot to automatically book and check is **ESSENTIAL**.
 ### Built with
 - NodeJS
 - TypeScript
-- Puppeteer
+- [Puppeteer](https://github.com/puppeteer/puppeteer/)
 - Heroku
+- [LowDB (v1.0.0)](https://github.com/typicode/lowdb) for a local DB, storing: reservations, slots, sports
 
 ## Roadmap
 
