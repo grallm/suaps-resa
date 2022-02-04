@@ -2,6 +2,7 @@ import puppeteer from 'puppeteer'
 import { UserSports } from '../models/sportsSlotsFetch.model'
 
 const initUrl = 'https://cas-ha.univ-nantes.fr/esup-cas-server/login?service=https://unsport.univ-nantes.fr/web/authenticate'
+const bookUrl = 'https://unsport.univ-nantes.fr/web/api/creneaux/'
 
 export class UnSport {
   private browser: puppeteer.Browser | undefined
@@ -58,6 +59,41 @@ export class UnSport {
     }
   }
 
+  /**
+   * Book a UNSport slot
+   * @param slotId
+   */
+  public async bookSlot (slotId: number) {
+    if (!this.page) throw new Error('Page not initialized')
+
+    // eslint-disable-next-line no-console
+    if (process.env.NODE_ENV === 'development') console.log(`Booking ${slotId}...`)
+
+    try {
+      // Adapting request to PUT
+      await this.page.setRequestInterception(true)
+
+      this.page.once('request', req => {
+        req.continue({
+          method: 'PUT'
+        })
+      })
+
+      // Building URL
+      const bookUrlBuilt = new URL(slotId.toString(), bookUrl)
+      bookUrlBuilt.searchParams.set('typePersonne', 'GE')
+
+      await this.page.goto(bookUrlBuilt.href)
+    } catch (error) {
+      // eslint-disable-next-line no-console
+      console.error(error)
+      return null
+    }
+  }
+
+  /**
+   * Close headless browser
+   */
   public async closeBrowser () {
     await this.browser?.close()
   }

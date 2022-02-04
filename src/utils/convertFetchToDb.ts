@@ -53,11 +53,15 @@ export const getStartEndDate = (slot: Creneau): { start: Date, end: Date } | nul
   // Start
   start.setHours(parseInt(times[1]))
   start.setMinutes(parseInt(times[2]))
+  start.setSeconds(0)
+
+  // Add 1 week if date already passed
+  if (new Date() >= start) start.setDate(start.getDate() + 7)
 
   // End
-  const end = new Date(start.getDate())
-  end.setHours(parseInt(times[1]))
-  end.setMinutes(parseInt(times[2]))
+  const end = new Date(start.getTime())
+  end.setHours(parseInt(times[3]))
+  end.setMinutes(parseInt(times[4]))
 
   return {
     start, end
