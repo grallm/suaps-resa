@@ -18,8 +18,8 @@ reservationRouter.get('/', (req, res) => {
 
 /**
  * Add a Reservation
- * @param {number} slotId
- * @param {boolean} recurrent should reservation be done each week or once ?
+ * @body {number} slotId
+ * @body {boolean} recurrent should reservation be done each week or once ?
  */
 reservationRouter.post(
   '/',
