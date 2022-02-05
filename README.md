@@ -26,9 +26,20 @@ Get a specific slot
 - **Param** *number* id : Slot ID
 Book a slot
 
+
 ### Reservations
+#### GET /reservations/
+Get all reservations
+
+#### POST /reservations/
+- **Body** *number* slotId : Slot ID
+- **Body** *number* recurrent : Is the booking recurrent (each week) ?
+Book a slot
+
 
 ### Other
+#### GET /forceFetch/
+Force to fetch slots
 
 
 ## Roadmap

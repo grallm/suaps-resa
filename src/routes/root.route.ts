@@ -5,7 +5,7 @@ import { UnSport } from '../services/UNSport'
 export const rootRouter = express.Router()
 
 /**
- * Force to fetch last slots
+ * Force to fetch slots
  */
 rootRouter.get('/forceFetch', async (req, res) => {
   try {
