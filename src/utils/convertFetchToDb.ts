@@ -90,8 +90,8 @@ export const sportsSlotFetchToSlotDb = (sport: SportList): DBStructure['sportsSl
       {
         ...slot,
         sportId,
-        start: dates.start,
-        end: dates.end
+        start: dates.start.toISOString(),
+        end: dates.end.toISOString()
       }
     ]
   }, [] as DBSportSlot[])

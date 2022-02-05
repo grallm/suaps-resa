@@ -31,6 +31,9 @@ Book a slot
 #### GET /reservations/
 Get all reservations
 
+#### GET /reservations/ics
+Get all reservations under ICS format
+
 #### POST /reservations/
 - **Body** *number* slotId : Slot ID
 - **Body** *number* recurrent : Is the booking recurrent (each week) ?
@@ -49,7 +52,7 @@ Force to fetch slots
 - [x] Check availability for these slots
 - [x] Book slots
 - [x] Specify interesting slots
-- [ ] Export booked slots to ICS
+- [x] Export booked slots to ICS
 - [ ] Add a few tests
 - [ ] GitHub CI/CD
 - [ ] Use CRON to regularly check availbility and to book
