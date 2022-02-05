@@ -31,6 +31,9 @@ Book a slot
 #### GET /reservations/
 Get all reservations
 
+#### GET /reservations/ics
+Get all reservations under ICS format
+
 #### POST /reservations/
 - **Body** *number* slotId : Slot ID
 - **Body** *number* recurrent : Is the booking recurrent (each week) ?
