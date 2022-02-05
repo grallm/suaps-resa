@@ -15,15 +15,13 @@ export class SportSlotController {
 
   /**
    * Find a slot
-   * @param sportId
    * @param slotId
    * @returns
    */
-  public getSportSlot (sportId: number, slotId: number): DBSportSlot | null {
+  public getSportSlot (slotId: number): DBSportSlot | null {
     return this.db
       .find({
-        code: slotId,
-        sportId: sportId
+        code: slotId
       } as Partial<DBStructure['sportsSlots'][number]>)
       .value()
   }

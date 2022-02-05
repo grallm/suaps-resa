@@ -63,7 +63,12 @@ export class UnSport {
    * Book a UNSport slot
    * @param slotId
    */
-  public async bookSlot (slotId: number) {
+  public async bookSlot (slotId: number): Promise<{
+    booked: true
+  }| {
+    booked: false
+    error: unknown
+  }> {
     if (!this.page) throw new Error('Page not initialized')
 
     // eslint-disable-next-line no-console
@@ -83,11 +88,23 @@ export class UnSport {
       const bookUrlBuilt = new URL(slotId.toString(), bookUrl)
       bookUrlBuilt.searchParams.set('typePersonne', 'GE')
 
-      await this.page.goto(bookUrlBuilt.href)
+      const res = await this.page.goto(bookUrlBuilt.href)
+
+      return (res.ok())
+        ? {
+            booked: true
+          }
+        : {
+            booked: false,
+            error: await res.json()
+          }
     } catch (error) {
       // eslint-disable-next-line no-console
       console.error(error)
-      return null
+      return {
+        booked: false,
+        error
+      }
     }
   }
 

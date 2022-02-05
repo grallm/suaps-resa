@@ -14,7 +14,8 @@ module.exports = {
     '@typescript-eslint'
   ],
   rules: {
-    'no-console': 1
+    'no-console': 1,
+    '@typescript-eslint/no-non-null-assertion': 'warn'
   },
   root: true
 }

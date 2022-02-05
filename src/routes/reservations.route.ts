@@ -18,24 +18,22 @@ reservationRouter.get('/', (req, res) => {
 
 /**
  * Add a Reservation
- * @param {string} sportId
- * @param {string} slotId
+ * @param {number} slotId
  * @param {boolean} recurrent should reservation be done each week or once ?
  */
 reservationRouter.post(
   '/',
-  body(['sportId', 'slotId']).isNumeric(),
-  body('recurrent').optional().isBoolean(),
-  body().custom((body) => {
+  body(['slotId']).isNumeric().custom((body) => {
     // Check if slot exists
     if (
       body.sportId && body.slotId &&
-      !sportSlotController.getSportSlot(parseInt(body.sportId), parseInt(body.slotId))
+      !sportSlotController.getSportSlot(parseInt(body.slotId))
     ) {
       throw new Error('Slot not found')
     }
     return true
   }),
+  body('recurrent').optional().isBoolean(),
   (req: express.Request<{}, {}, {
     sportId: string
     slotId: string
@@ -47,7 +45,6 @@ reservationRouter.post(
     }
 
     const slot = sportSlotController.getSportSlot(
-      parseInt(req.body.sportId),
       parseInt(req.body.slotId)
     )
 
@@ -56,7 +53,7 @@ reservationRouter.post(
     return res.send(
       reservationController.add({
         slotId: parseInt(req.body.slotId),
-        sportId: parseInt(req.body.sportId),
+        sportId: slot.sportId,
         dateStart: slot.start,
         dateEnd: slot.end,
         recurrent: req.body.recurrent || false,
