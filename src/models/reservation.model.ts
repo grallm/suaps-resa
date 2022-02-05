@@ -27,4 +27,6 @@ export interface Reservation {
    */
   recurrent: boolean
   booked: boolean
+  location: string
+  description: string
 }

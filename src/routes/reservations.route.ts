@@ -20,7 +20,10 @@ reservationRouter.get('/', (req, res) => {
  * Get all reservations as ICS
  */
 reservationRouter.get('/ics', (req, res) => {
-  return res.send(reservationController.getIcs())
+  const { error, value } = reservationController.getIcs()
+  return error
+    ? res.status(500).send({ error })
+    : res.send(value)
 })
 
 /**
@@ -65,7 +68,9 @@ reservationRouter.post(
         dateEnd: slot.end,
         recurrent: req.body.recurrent || false,
         startCheck: new Date().toISOString(),
-        booked: false
+        booked: false,
+        location: slot.adresse,
+        description: slot.localisation
       })
     )
   }

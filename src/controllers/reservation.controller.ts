@@ -1,12 +1,15 @@
 import { FileDB } from '../services/Database'
 import { v4 as uuid } from 'uuid'
 import { Reservation } from '../models/reservation.model'
-import ics from 'ics'
+import * as ics from 'ics'
+import { DBSport } from '../services/database.types'
 
 export class ReservationController {
+  private fullDb
   private db
 
   constructor (db: FileDB) {
+    this.fullDb = db.DB
     this.db = db.DB.get('reservations')
   }
 
@@ -37,11 +40,15 @@ export class ReservationController {
    */
   public getIcs () {
     const reservations = this.db.value()
-    console.log(reservations)
 
-    ics.createEvents(reservations.map(reserv => {
+    return ics.createEvents(reservations.map(reserv => {
       const start = new Date(reserv.dateStart)
       const end = new Date(reserv.dateEnd)
+
+      const sport = this.fullDb
+        .get('sports')
+        .find({ code: reserv.sportId } as Partial<DBSport>)
+        .value()
 
       return {
         start: [
@@ -57,7 +64,10 @@ export class ReservationController {
           end.getDate(),
           end.getHours(),
           end.getMinutes()
-        ]
+        ],
+        location: reserv.location,
+        title: sport.nom || 'sport',
+        description: reserv.description
       } as ics.EventAttributes
     }))
   }
