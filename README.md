@@ -52,7 +52,7 @@ Force to fetch slots
 - [x] Check availability for these slots
 - [x] Book slots
 - [x] Specify interesting slots
-- [ ] Export booked slots to ICS
+- [x] Export booked slots to ICS
 - [ ] Add a few tests
 - [ ] GitHub CI/CD
 - [ ] Use CRON to regularly check availbility and to book
