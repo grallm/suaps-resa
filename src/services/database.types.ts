@@ -4,8 +4,14 @@ import { Creneau, SportList } from '../models/sportsSlotsFetch.model'
 export type DBSport = Omit<SportList, 'registrations' | 'creneaux'>
 export type DBSportSlot = (Creneau & {
   sportId: number
-  start: Date
-  end: Date
+  /**
+   * ISOString
+   */
+  start: string
+  /**
+   * ISOString
+   */
+  end: string
 })
 
 export interface DBStructure {

@@ -82,7 +82,7 @@ sportSlotRouter.put(
             dateStart: slot.start,
             dateEnd: slot.end,
             recurrent: false,
-            startCheck: new Date(),
+            startCheck: new Date().toISOString(),
             booked: true
           })
         )

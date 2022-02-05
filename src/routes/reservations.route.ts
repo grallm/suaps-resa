@@ -17,6 +17,13 @@ reservationRouter.get('/', (req, res) => {
 })
 
 /**
+ * Get all reservations as ICS
+ */
+reservationRouter.get('/ics', (req, res) => {
+  return res.send(reservationController.getIcs())
+})
+
+/**
  * Add a Reservation
  * @body {number} slotId
  * @body {boolean} recurrent should reservation be done each week or once ?
@@ -57,7 +64,7 @@ reservationRouter.post(
         dateStart: slot.start,
         dateEnd: slot.end,
         recurrent: req.body.recurrent || false,
-        startCheck: new Date(),
+        startCheck: new Date().toISOString(),
         booked: false
       })
     )
