@@ -13,6 +13,38 @@ A bot to automatically book and check is **ESSENTIAL**.
 - [Puppeteer](https://github.com/puppeteer/puppeteer/) for all HTTP requests, such as auth with CAS
 - [LowDB (v1.0.0)](https://github.com/typicode/lowdb) for a local DB, storing: reservations, slots, sports
 
+## REST API routes
+### Slots
+#### GET /slots/
+Get all slots available
+
+#### GET /slots/:id
+- **Param** *number* id : Slot ID
+Get a specific slot
+
+#### PUT /slots/:id
+- **Param** *number* id : Slot ID
+Book a slot
+
+
+### Reservations
+#### GET /reservations/
+Get all reservations
+
+#### GET /reservations/ics
+Get all reservations under ICS format
+
+#### POST /reservations/
+- **Body** *number* slotId : Slot ID
+- **Body** *number* recurrent : Is the booking recurrent (each week) ?
+Book a slot
+
+
+### Other
+#### GET /forceFetch/
+Force to fetch slots
+
+
 ## Roadmap
 
 - [x] Connect to university's CAS (= Central Authentication Service) using env variable
@@ -20,7 +52,7 @@ A bot to automatically book and check is **ESSENTIAL**.
 - [x] Check availability for these slots
 - [x] Book slots
 - [x] Specify interesting slots
-- [ ] Export booked slots to ICS
+- [x] Export booked slots to ICS
 - [ ] Add a few tests
 - [ ] GitHub CI/CD
 - [ ] Use CRON to regularly check availbility and to book
