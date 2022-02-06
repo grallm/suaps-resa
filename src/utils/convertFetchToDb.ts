@@ -37,6 +37,7 @@ export const getStartEndDate = (slot: Creneau): { start: Date, end: Date } | nul
 
   const times = hourRgx.exec(hourStartEnd)
 
+  // If times not extracted or days not found
   if (times?.length !== 5 || weekdayId < 0 || weekdayId > 6) {
     // eslint-disable-next-line no-console
     console.error(`Date error: ${hourStartEnd} / ${weekday} / ${slot.code}`)
@@ -47,8 +48,11 @@ export const getStartEndDate = (slot: Creneau): { start: Date, end: Date } | nul
   const start = new Date()
 
   // Find weekday, sercurize no infinite loop
-  const todayId = start.getDay()
-  while (start.getDay() !== weekdayId && start.getDay() !== todayId) start.setDate(start.getDate() + 1)
+  let limitTour = 0
+  while (start.getDay() !== weekdayId && limitTour < 7) {
+    start.setDate(start.getDate() + 1)
+    limitTour++
+  }
 
   // Start
   start.setHours(parseInt(times[1]))
