@@ -1,0 +1,8 @@
+name: test-lint
+on: [push]
+jobs:
+  test-lint:
+    runs-on: ubuntu-latest
+    steps:
+      # Access repo
+      - actions/checkout@v2
