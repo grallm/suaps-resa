@@ -1,27 +1,16 @@
 import { UnSport } from '../../src/services/UNSport'
 
+require('dotenv').config()
+
+const unsport = new UnSport()
+
 describe('UNSport class for manipulating API', () => {
-  const unsport = new UnSport()
-
+  jest.setTimeout(25000)
   beforeAll(async () => {
-    // await unsport.init()
+    return await unsport.init()
   })
 
-  test('well authenticated to Nantes University CAS', async () => {
-    expect(await unsport.bookSlot(0)).toEqual(
-      expect.objectContaining<Awaited<ReturnType<UnSport['bookSlot']>>>({
-        booked: true
-      })
-    )
+  test('fetch Sports, Slots, and Reservations', async () => {
+    expect(await unsport.fetchSports()).not.toBe(null)
   })
-
-  test.todo('fetch Sports, Slots, and Reservations')
-
-  // test('book a slot', async () => {
-  //   expect(await unsport.bookSlot(590)).toEqual(
-  //     expect.objectContaining<Awaited<ReturnType<UnSport['bookSlot']>>>({
-  //       booked: true
-  //     })
-  //   )
-  // })
 })
