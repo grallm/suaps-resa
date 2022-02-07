@@ -5,4 +5,9 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       # Access repo
-      - actions/checkout@v2
+      - name: Checkout
+        uses: actions/checkout@v2.4.0
+      - name: Install modules
+        run: yarn
+      - name: Run test
+        run: yarn test
