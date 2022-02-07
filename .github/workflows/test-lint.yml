@@ -7,7 +7,15 @@ jobs:
       # Access repo
       - name: Checkout
         uses: actions/checkout@v2.4.0
+
+      - name: Add .env from Secrets
+        run: |
+          touch .env
+          echo "NU_AUTH_PWD=${{ secrets.NU_AUTH_PWD }}" > .env
+          echo "NU_AUTH_PWD=${{ secrets.NU_AUTH_USERNAME }}" > .env
+
       - name: Install modules
         run: yarn
+
       - name: Run test
         run: yarn test
