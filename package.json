@@ -1,6 +1,6 @@
 {
   "name": "suaps-resa",
-  "version": "0.8.2",
+  "version": "0.8.3",
   "description": "Web app to book sport slots at Nantes Univerisity",
   "main": "./dist/src/app.js",
   "scripts": {
