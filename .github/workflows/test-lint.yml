@@ -14,6 +14,8 @@ jobs:
           touch .env
           echo "NU_AUTH_PWD=${{ secrets.NU_AUTH_PWD }}" > .env
           echo "NU_AUTH_PWD=${{ secrets.NU_AUTH_USERNAME }}" > .env
+      
+      - run: ls
 
       - name: Install modules
         run: yarn
