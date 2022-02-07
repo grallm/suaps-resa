@@ -2,6 +2,7 @@ name: test-lint
 on: [push]
 jobs:
   test-lint:
+    environment: Testing
     runs-on: ubuntu-latest
     steps:
       # Access repo
