@@ -6,6 +6,7 @@ on:
       - dev
 jobs:
   test-lint:
+    name: Testing & Checking linter
     environment: Testing
     runs-on: ubuntu-latest
     steps:
@@ -22,5 +23,8 @@ jobs:
       - name: Install modules
         run: yarn
 
-      - name: Run test
+      - name: Run Linter
+        run: yarn lint
+
+      - name: Run tests
         run: yarn test
