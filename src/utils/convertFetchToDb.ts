@@ -1,5 +1,7 @@
 import { Creneau, SportList } from '../models/sportsSlotsFetch.model'
-import { DBSportSlot, DBStructure } from '../services/database.types'
+import { DBSportSlot, DBStructure } from '../models/database.types'
+import { Reservation } from '../models/reservation.model'
+import { v4 as uuid } from 'uuid'
 
 /**
  * Ordered French weekdays, starting from Sunday
@@ -99,4 +101,41 @@ export const sportsSlotFetchToSlotDb = (sport: SportList): DBStructure['sportsSl
       }
     ]
   }, [] as DBSportSlot[])
+}
+
+/**
+ * Convert fetched sport's reserved slots to DB reservations
+ * @param sport fetched sport
+ * @returns
+ */
+export const sportsRegistrationsFetchToReservationsDb = (sports: SportList[]): Reservation[] => {
+  return sports.map(sport =>
+    // Construct object with all data for Reservation
+    sport.registrations.reduce((acc, regist) => {
+      // Add registration if found Slot
+      const slot = sport.creneaux.find(({ code }) => code === regist.activity.code)
+
+      const date = slot ? getStartEndDate(slot) : null
+
+      if (slot && date) {
+        return [
+          ...acc,
+          {
+            id: uuid(),
+            recurrent: false,
+            sportId: sport.code,
+            slotId: slot.code,
+            dateStart: date.start.toISOString(),
+            dateEnd: date.end.toISOString(),
+            booked: true,
+            startCheck: new Date().toISOString(),
+            location: slot.adresse,
+            description: slot.localisation
+          } as Reservation
+        ]
+      }
+
+      return acc
+    }, [] as Reservation[])
+  ).flat()
 }

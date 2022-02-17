@@ -31,7 +31,7 @@ export interface Creneau {
   site: string;
   places: number;
   code: number;
-  jour: Jour;
+  jour: string | Jour;
   encadrant: string;
   heures: string;
   localisation: string;

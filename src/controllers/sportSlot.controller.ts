@@ -1,5 +1,5 @@
 import { FileDB } from '../services/Database'
-import { DBSportSlot, DBStructure } from '../services/database.types'
+import { DBSportSlot, DBStructure } from '../models/database.types'
 
 export class SportSlotController {
   private db

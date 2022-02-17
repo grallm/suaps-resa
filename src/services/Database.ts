@@ -1,7 +1,7 @@
 import { join } from 'path'
 import LowDB from 'lowdb'
 import FileSync from 'lowdb/adapters/FileSync'
-import { DBStructure } from './database.types'
+import { DBStructure } from '../models/database.types'
 import { sportFetchToSportDb, sportsSlotFetchToSlotDb } from '../utils/convertFetchToDb'
 import { UnSport } from './UNSport'
 
@@ -10,7 +10,7 @@ require('dotenv').config()
 export class FileDB {
   private db
 
-  constructor () {
+  constructor (initFetch = true) {
     // Use JSON file for storage and set default if absent
     const file = join(__dirname, '../../db.json')
     const adapter = new FileSync<DBStructure>(file, {
@@ -25,26 +25,28 @@ export class FileDB {
     this.db = LowDB(adapter)
 
     // Do a default fetch for slots
-    const unSport = new UnSport()
-    unSport.init().then(() =>
-      unSport.fetchSports().then(sports => {
-        if (sports) {
-          // Transform sports
-          this.db.set('sports', sports.sports
-            .map(sport => sportFetchToSportDb(sport)) as DBStructure['sports'])
-            .value()
+    if (initFetch) {
+      const unSport = new UnSport()
+      unSport.init().then(() =>
+        unSport.fetchSports().then(sports => {
+          if (sports) {
+            // Transform sports
+            this.db.set('sports', sports.sports
+              .map(sport => sportFetchToSportDb(sport)) as DBStructure['sports'])
+              .value()
 
-          // Transform sport slots
-          this.db.set('sportsSlots', sports.sports
-            .reduce((accu, sport) => [...accu, ...sportsSlotFetchToSlotDb(sport)], [] as DBStructure['sportsSlots']))
-            .value()
+            // Transform sport slots
+            this.db.set('sportsSlots', sports.sports
+              .reduce((accu, sport) => [...accu, ...sportsSlotFetchToSlotDb(sport)], [] as DBStructure['sportsSlots']))
+              .value()
 
-          this.db.set('lastFetch', new Date()).value()
+            this.db.set('lastFetch', new Date()).value()
 
-          this.db.write()
-        }
-      })
-    )
+            this.db.write()
+          }
+        })
+      )
+    }
   }
 
   get DB () {
