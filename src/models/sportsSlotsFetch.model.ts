@@ -15,7 +15,7 @@ export enum Jour {
 
 export interface Activity {
   code: number;
-  jour: Jour;
+  jour: string | Jour;
   horaire: string;
   lieu: string;
 }
@@ -31,7 +31,7 @@ export interface Creneau {
   site: string;
   places: number;
   code: number;
-  jour: Jour;
+  jour: string | Jour;
   encadrant: string;
   heures: string;
   localisation: string;

@@ -2,7 +2,7 @@ import { FileDB } from '../services/Database'
 import { v4 as uuid } from 'uuid'
 import { Reservation } from '../models/reservation.model'
 import * as ics from 'ics'
-import { DBSport } from '../services/database.types'
+import { DBSport } from '../models/database.types'
 
 export class ReservationController {
   private fullDb

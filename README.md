@@ -13,6 +13,13 @@ A bot to automatically book and check is **ESSENTIAL**.
 - [Puppeteer](https://github.com/puppeteer/puppeteer/) for all HTTP requests, such as auth with CAS
 - [LowDB (v1.0.0)](https://github.com/typicode/lowdb) for a local DB, storing: reservations, slots, sports
 
+### Goals
+- Discover CI/CD with Github Actions
+- Try Puppeteer
+- Try Lodash
+- Practice good practices (tests, linter, Express structures...)
+- Get my sport slots !
+
 ## REST API routes
 ### Slots
 #### GET /slots/
