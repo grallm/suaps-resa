@@ -2,7 +2,7 @@ import { join } from 'path'
 import LowDB from 'lowdb'
 import FileSync from 'lowdb/adapters/FileSync'
 import { DBStructure } from '../models/database.types'
-import { sportFetchToSportDb, sportsSlotFetchToSlotDb } from '../utils/convertFetchToDb'
+import { sportFetchToSportDb, sportsRegistrationsFetchToReservationsDb, sportsSlotFetchToSlotDb } from '../utils/convertFetchToDb'
 import { UnSport } from './UNSport'
 
 require('dotenv').config()
@@ -41,6 +41,11 @@ export class FileDB {
               .value()
 
             this.db.set('lastFetch', new Date()).value()
+
+            // Add reservations from API
+            this.db
+              .get('reservations')
+              .push(...sportsRegistrationsFetchToReservationsDb(sports.sports))
 
             this.db.write()
           }

@@ -15,7 +15,7 @@ export enum Jour {
 
 export interface Activity {
   code: number;
-  jour: Jour;
+  jour: string | Jour;
   horaire: string;
   lieu: string;
 }
