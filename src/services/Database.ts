@@ -26,6 +26,19 @@ export class FileDB {
 
     // Do a default fetch for slots
     if (initFetch) {
+      this.populateFromApi().catch(err => console.error(err))
+    }
+  }
+
+  get DB () {
+    return this.db
+  }
+
+  /**
+   * Populate DB with Sports, Slots, Reservations from UNSport's API
+   */
+  public populateFromApi () {
+    return new Promise<void>((resolve, reject) => {
       const unSport = new UnSport()
       unSport.init().then(() =>
         unSport.fetchSports().then(sports => {
@@ -48,14 +61,12 @@ export class FileDB {
               .push(...sportsRegistrationsFetchToReservationsDb(sports.sports))
 
             this.db.write()
+
+            return resolve()
           }
         })
       )
-    }
-  }
-
-  get DB () {
-    return this.db
+    })
   }
 }
 
