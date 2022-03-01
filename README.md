@@ -60,9 +60,11 @@ Force to fetch slots
 - [x] Book slots
 - [x] Specify interesting slots
 - [x] Export booked slots to ICS
-- [ ] Add a few tests
-- [ ] GitHub CI/CD
-- [ ] Use CRON to regularly check availbility and to book
+- [x] Add a few tests
+- [x] GitHub CI/CD
+- [ ] Use CRON to:
+  - [ ] regularly check availbility
+  - [ ] book recurrent and not
 
 ## License
 [MIT](https://choosealicense.com/licenses/mit/)
